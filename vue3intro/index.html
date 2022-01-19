@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Introduction</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app">
+
+        <div class="cart">Cart ({{ cart }})</div>
+
+        <div class="product-display">
+            <div class="product-container">
+                <div class="product-image">
+                    <!-- Vue Attribute Binding -->
+                    <!-- <img v-bind:src="image" v-bind:alt="image" v-bind:title="description"> -->
+                    <!-- A shorthand for v-bind -->
+                    <img :src="image" :alt="description" :title="description">
+                </div>
+                <div class="product-info">
+                    <!-- <h1>{{ product }}</h1> -->
+                    <h1>{{ title }}</h1>
+                    <p>{{ description }}</p>
+
+                    <!-- V-if condition-->
+                    <p v-if="inventory >= 10">In Stock</p>
+                    <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+                    <p v-else>Out of Stock</p>
+            
+                    <!-- v-show condition จะแสดงผลก็ต่อเมื่อ inStock เป็น true -->
+                    <p v-show="inStock">In Stock</p>
+
+                    <!-- List Rendering -->
+                    <!-- List Rendering การแสดงผลของตัวแปร Array, Object  โดนการวน loop ใช้ฟังชั่นของ vue การวน loop vue จะอ้างอิง id ใส่เข้าไปไม่ได้ vue จะไม่รู้ว่ามันเป็น id ของแต่ละแถวลำดับที่ 1 2 3 หา index ไม่ได้เพราะฉะนั้นทุกครั้งที่เราใช้ v-for เพื่อ loop เราจะต้องใช้ key ระบุเข้าไปเสมอเพื่อบอกว่าแต่ละแถวที่วิ่งไปเป็นลำดับที่เท่าไรไม่ซ้ำ -->
+                    <ul>
+                        <!-- v-for directive -->
+                        <li v-for="data in details" :key="data">{{ data }}</li>
+                    </ul>
+            
+                    <div v-for="data in variants" :key="data.id" @mouseover="updateImage(data.image)" class="color-circle" :style="{backgroundColor: data.color}" >
+                        <!-- {{ data.color }} -->
+                    </div>
+            
+                    <div>
+                        <button class="button" :class="{disabledButton: !inStock }" :disabled="inventory <= 0" @click="addToCart" >Add to Cart</button>
+                    </div>
+            
+                    <p><a :href="url">Made by ITGenius</a></p>
+                </div>
+            </div>
+        </div>        
+    </div>
+  
+    <!-- Import Js -->
+    <script src="./main.js"></script>
+
+    <!-- Mount App mount เป็นการเข้าถึง Scope id class ของ html -->
+    <script>
+        const mountedApp = app.mount('#app')
+    </script>
+    
+</body>
+</html>
